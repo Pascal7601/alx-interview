@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 """
-python function to define the 
+python function to define the
 pascals triangle
 """
+
 
 def pascal_triangle(n):
     """
