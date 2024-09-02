@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """
 a file that handles how backtracking works
 in solving the N queens problem
