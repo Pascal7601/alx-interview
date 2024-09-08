@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """
 a file that handles how backtracking works
 in solving the N queens problem
@@ -48,7 +48,7 @@ def solveNQueens(N: int):
     return res
 
 if __name__ == '__main__':
-    number = sys.argv[0]
+    number = int(sys.argv[1])
     if not isinstance(number, int):
         print("N must be a number")
         exit(1)
