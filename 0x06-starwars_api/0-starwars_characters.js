@@ -1,40 +1,31 @@
 #!/usr/bin/node
-/**
- * working with star wars api
- */
 
 const request = require('request');
 
-// Get the argument from the command line
-const arg1 = process.argv[2];
+const movieId = process.argv[2];
+const movieEndpoint = 'https://swapi-api.alx-tools.com/api/films/' + movieId;
 
-// Form the URL for the film
-const url = `https://swapi-api.alx-tools.com/api/films/${arg1}`;
+function sendRequest (characterList, index) {
+  if (characterList.length === index) {
+    return;
+  }
 
-// First request: Get the film data
-request(url, (err, res, body) => {
-    if (err) {
-        console.error('Error:', err);
-        return;
+  request(characterList[index], (error, response, body) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(JSON.parse(body).name);
+      sendRequest(characterList, index + 1);
     }
+  });
+}
 
-    // Parse the response body into a JavaScript object
-    const film = JSON.parse(body);
-    
-    // Extract the characters array (contains URLs)
-    const characters = film.characters;
+request(movieEndpoint, (error, response, body) => {
+  if (error) {
+    console.log(error);
+  } else {
+    const characterList = JSON.parse(body).characters;
 
-    // Loop over the characters and make a request for each one
-    characters.forEach((characterUrl) => {
-        request(characterUrl, (err, res, body) => {
-            if (err) {
-                console.error('Error fetching character:', err);
-                return;
-            }
-
-            // Parse and log each character's data
-            const character = JSON.parse(body);
-            console.log(character.name);
-        });
-    });
+    sendRequest(characterList, 0);
+  }
 });
